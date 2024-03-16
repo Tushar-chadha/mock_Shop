@@ -5,3 +5,12 @@ TextStyle poppinStyle(Color textColor, double fontSize, FontWeight fontWeight) {
   return GoogleFonts.poppins(
       color: textColor, fontSize: fontSize, fontWeight: fontWeight);
 }
+
+TextStyle poppinStyleHeight(
+    Color textColor, double fontSize, FontWeight fontWeight, double height) {
+  return GoogleFonts.poppins(
+      height: height,
+      color: textColor,
+      fontSize: fontSize,
+      fontWeight: fontWeight);
+}
