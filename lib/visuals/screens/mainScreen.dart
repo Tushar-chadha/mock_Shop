@@ -35,13 +35,12 @@ class _mainScreenState extends State<mainScreen> {
         return Scaffold(
           backgroundColor: const Color(0xFFE2E2E2),
           bottomNavigationBar: SafeArea(
+              top: false,
               child: bottomNavBar(
-            mainScreenNotifier: mainScreenNotifier,
-            SeletedIndex: currentIndex,
-          )),
-          body: Center(
-            child: pageToDisplay[currentIndex],
-          ),
+                mainScreenNotifier: mainScreenNotifier,
+                SeletedIndex: currentIndex,
+              )),
+          body: pageToDisplay[currentIndex],
         );
       },
     );
