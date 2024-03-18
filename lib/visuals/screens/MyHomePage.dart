@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/homeWidget.dart';
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Gap(30),
                     Text(
                       "Athletics Shoes Collection",
                       style: poppinStyle(Colors.white, 40, FontWeight.bold),
@@ -68,23 +70,23 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           // TabBar And Top section Ended
           Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.275),
+                top: MediaQuery.of(context).size.height * 0.295),
             child: Container(
               padding: const EdgeInsets.only(left: 12, right: 12),
               child: TabBarView(
                 controller: ShoeMenuController,
                 children: [
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
-                    child: HomeWidget(context1: context),
+                    child: HomeWidget(),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.405,
-                    color: Colors.amberAccent,
+                    child: HomeWidget(),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.405,
-                    color: Colors.amber,
+                    child: HomeWidget(),
                   ),
                 ],
               ),
@@ -113,13 +115,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 //           itemBuilder: ((context, index) {
 //             return Container(
 //               decoration: BoxDecoration(
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.grey.withOpacity(0.3),
-//                     spreadRadius: 1,
-//                     blurRadius: 3,
-//                     offset: const Offset(2, 2),
-//                   ),
+              
 //                 ],
 //                 color: Colors.white,
 //                 borderRadius: const BorderRadius.all(
