@@ -20,8 +20,8 @@ class _mainScreenState extends State<mainScreen> {
     MyHomePage(),
     SearchPage(),
     MyHomePage(),
-    const CartScreen(),
-    const ProfileScreen()
+    CartScreen(),
+    ProfileScreen()
   ];
 
   @override
