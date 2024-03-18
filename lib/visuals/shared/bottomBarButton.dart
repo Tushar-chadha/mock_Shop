@@ -17,7 +17,7 @@ class BottomBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       // ignore: avoid_print
-      onTap: () => onTap!() == null ? print("myname i chag") : onTap!(),
+      onTap: () => onTap!() ?? print("myname i chag"),
       child: SizedBox(
         width: 38,
         height: 38,
