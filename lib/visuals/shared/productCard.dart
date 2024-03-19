@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 
 class ProductCard extends StatelessWidget {
+ 
   final int index;
 
   const ProductCard({super.key, required this.index});
@@ -40,8 +41,9 @@ class ProductCard extends StatelessWidget {
                 filterQuality: FilterQuality.high,
                 fit: BoxFit.cover,
                 useOldImageOnUrlChange: true,
-                imageUrl:
-                    index%2==0?"https://d326fntlu7tb1e.cloudfront.net/uploads/e32f065b-358a-4d26-a91e-5dcb35bb040f-HP9662_a1.webp":"https://d326fntlu7tb1e.cloudfront.net/uploads/a767e5dc-0aa6-44bf-9b78-e743b4383672-Q47342_a1.webp",
+                imageUrl: index % 2 == 0
+                    ? "https://d326fntlu7tb1e.cloudfront.net/uploads/e32f065b-358a-4d26-a91e-5dcb35bb040f-HP9662_a1.webp"
+                    : "https://d326fntlu7tb1e.cloudfront.net/uploads/a767e5dc-0aa6-44bf-9b78-e743b4383672-Q47342_a1.webp",
               ),
             ),
             Text(
