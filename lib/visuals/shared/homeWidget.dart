@@ -1,24 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:shop/visuals/shared/appLayout.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/productCard.dart';
 
 class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(AppLayout.getSize(context, 320));
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: Column(children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 0.405,
+        SizedBox(
+          height: AppLayout.getSize(context, 320),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 10,
             itemBuilder: (context, index) {
               return SizedBox(
                   width: MediaQuery.of(context).size.width * 0.6,
-                  child: ProductCard(index: index,));
+                  child: ProductCard(
+                    index: index,
+                  ));
             },
           ),
         ),
@@ -45,7 +49,7 @@ class HomeWidget extends StatelessWidget {
               ),
               const Gap(5),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.12,
+                height: AppLayout.getSize(context, 100),
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
