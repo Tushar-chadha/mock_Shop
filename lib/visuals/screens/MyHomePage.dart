@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:shop/helper/helperService.dart';
+import 'package:shop/model/sneakerModel.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/homeWidget.dart';
 import 'package:shop/visuals/shared/productCard.dart';
@@ -12,9 +14,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+  late Future<List<Sneaker>> _male, _female, _kid;
+
+  void getMaleShoe() {
+    _male = helper().getMaleShoesDataFromJson();
+  }
+
+  void getfemaleShoe() {
+    _female = helper().getWomenShoesDataFromJson();
+  }
+
+  void getKidShoe() {
+    _kid = helper().getKidsShoesDataFromJson();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMaleShoe();
+    getfemaleShoe();
+    getKidShoe();
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: non_constant_identifier_names
+    double heightCheck = MediaQuery.of(context).size.height;
+    print(heightCheck);
     TabController ShoeMenuController = TabController(length: 3, vsync: this);
     return SizedBox(
       height: MediaQuery.of(context)
@@ -70,23 +96,31 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           // TabBar And Top section Ended
           Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.295),
+                top: heightCheck > 843
+                    ? MediaQuery.of(context).size.height * 0.230
+                    : MediaQuery.of(context).size.height * 0.295),
             child: Container(
-              padding: const EdgeInsets.only(left: 12, right: 12),
+              padding: const EdgeInsets.only(left: 0, right: 0),
               child: TabBarView(
                 controller: ShoeMenuController,
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
-                    child: HomeWidget(),
+                    child: HomeWidget(
+                      future: _male,
+                    ),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.405,
-                    child: HomeWidget(),
+                    child: HomeWidget(
+                      future: _female,
+                    ),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.405,
-                    child: HomeWidget(),
+                    child: HomeWidget(
+                      future: _kid,
+                    ),
                   ),
                 ],
               ),
@@ -97,40 +131,3 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     );
   }
 }
-
-
-// class latestCollectionTile extends StatelessWidget {
-//   const latestCollectionTile({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: MediaQuery.of(context).size.height * 0.14,
-//       width: MediaQuery.of(context).size.width,
-//       child: ListView.builder(
-//           itemCount: 10,
-//           scrollDirection: Axis.horizontal,
-//           itemBuilder: ((context, index) {
-//             return Container(
-//               decoration: BoxDecoration(
-              
-//                 ],
-//                 color: Colors.white,
-//                 borderRadius: const BorderRadius.all(
-//                   Radius.circular(10),
-//                 ),
-//               ),
-//               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-//               height: MediaQuery.of(context).size.height * 0.12,
-//               width: MediaQuery.of(context).size.height * 0.14,
-//               child: CachedNetworkImage(
-//                 imageUrl:
-//                     "https://d326fntlu7tb1e.cloudfront.net/uploads/710d020f-2da8-4e9e-8cff-0c8f24581488-GV6674.webp",
-//               ),
-//             );
-//           })),
-//     );
-//   }
-// }
