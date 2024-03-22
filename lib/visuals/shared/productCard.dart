@@ -1,20 +1,29 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final shoeName, shoeType, imgUrl, id, price;
+  bool isLiked;
 
-  const ProductCard({
+  ProductCard({
     super.key,
     required this.shoeName,
     required this.shoeType,
     required this.imgUrl,
     required this.price,
     required this.id,
+    this.isLiked = false,
   });
+
+  @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,51 +45,71 @@ class ProductCard extends StatelessWidget {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         width: MediaQuery.of(context).size.width * 0.6,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-              height: MediaQuery.of(context).size.height * 0.20,
-              child: CachedNetworkImage(
-                  filterQuality: FilterQuality.high,
-                  fit: BoxFit.cover,
-                  useOldImageOnUrlChange: true,
-                  imageUrl: imgUrl.toString()),
+        child: Stack(children: [
+          Positioned(
+            top: 8,
+            right: 8,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  widget.isLiked = widget.isLiked ? false : true;
+                });
+              },
+              child: Icon(
+                widget.isLiked
+                    ? CupertinoIcons.heart_fill
+                    : CupertinoIcons.heart,
+                size: widget.isLiked ? 22 : 20,
+              ),
             ),
-            Text(
-              shoeName,
-              style: poppinStyle(Colors.black, 25, FontWeight.bold),
-            ),
-            Text(
-              shoeType,
-              style: poppinStyle(Colors.black45, 15, FontWeight.normal),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Rs."+price.toString(),
-                  style: poppinStyle(Colors.black, 20, FontWeight.w500),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Colors",
-                      style: poppinStyle(Colors.black45, 15, FontWeight.normal),
-                    ),
-                    const Gap(5),
-                    const CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.black,
-                    )
-                  ],
-                )
-              ],
-            )
-          ],
-        ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                height: MediaQuery.of(context).size.height * 0.20,
+                child: CachedNetworkImage(
+                    filterQuality: FilterQuality.high,
+                    fit: BoxFit.cover,
+                    useOldImageOnUrlChange: true,
+                    imageUrl: widget.imgUrl.toString()),
+              ),
+              Text(
+                widget.shoeName,
+                style: poppinStyle(Colors.black, 25, FontWeight.bold),
+              ),
+              Text(
+                widget.shoeType,
+                style: poppinStyle(Colors.black45, 15, FontWeight.normal),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Rs." + widget.price.toString(),
+                    style: poppinStyle(Colors.black, 20, FontWeight.w500),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Colors",
+                        style:
+                            poppinStyle(Colors.black45, 15, FontWeight.normal),
+                      ),
+                      const Gap(5),
+                      const CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Colors.black,
+                      )
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
+        ]),
       ),
     );
   }
