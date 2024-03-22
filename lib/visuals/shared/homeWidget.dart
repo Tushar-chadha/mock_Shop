@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shop/model/sneakerModel.dart';
+import 'package:shop/visuals/screens/productByCat.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/productCard.dart';
 
@@ -16,7 +17,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.height);
+    // print(MediaQuery.of(context).size.height);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -54,7 +55,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       shoeName: shoeData.name,
                                       imgUrl: shoeData.imageUrl[0],
                                       shoeType: shoeData.category,
-                                      price: (double.parse(shoeData.price) *83.22).round(),
+                                      price:
+                                          (double.parse(shoeData.price) * 83.22)
+                                              .round(),
                                     ));
                               }),
                         );
@@ -76,7 +79,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                           style: poppinStyle(Colors.black, 20, FontWeight.bold),
                         ),
                         GestureDetector(
-                          onTap: () => print("View All pressed"),
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProductByCat(),
+                            ),
+                          ),
                           child: Text(
                             "View All",
                             style:
@@ -99,7 +106,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       } else {
                         return SizedBox(
                           height: MediaQuery.of(context).size.height > 900
-                              ? 150
+                              ? 120
                               : 100,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
@@ -108,7 +115,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             itemBuilder: (context, index) {
                               return Container(
                                 padding: const EdgeInsets.all(2),
-                                margin: const EdgeInsets.fromLTRB(12, 0, 0, 0),
+                                margin: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
@@ -126,7 +133,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 child: CachedNetworkImage(
                                     filterQuality: FilterQuality.high,
                                     imageUrl:
-                                        snapshot.data![index].imageUrl[0]),
+                                        snapshot.data![index].imageUrl[1]),
                               );
                             },
                           ),

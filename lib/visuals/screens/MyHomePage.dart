@@ -7,6 +7,7 @@ import 'package:shop/model/sneakerModel.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/homeWidget.dart';
 import 'package:shop/visuals/shared/productCard.dart';
+import 'package:shop/visuals/shared/tabBar.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -65,27 +66,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Gap(30),
+                    Gap(20),
                     Text(
                       "Athletics Shoes Collection",
                       style: poppinStyle(Colors.white, 40, FontWeight.bold),
                     ),
                     const Gap(10),
-                    TabBar(
-                      indicatorColor: Colors.white,
-                      unselectedLabelStyle:
-                          poppinStyle(Colors.white60, 23, FontWeight.bold),
-                      labelStyle:
-                          poppinStyle(Colors.white, 24, FontWeight.bold),
-                      tabAlignment: TabAlignment.start,
-                      isScrollable: true,
-                      dividerColor: Colors.transparent,
+                    tabBarWidget(
                       controller: ShoeMenuController,
-                      tabs: const [
-                        Text("Men's Shoes"),
-                        Text("Women's Shoes"),
-                        Text("kid's Shoes"),
-                      ],
                     ),
                     const Gap(10),
                   ],
@@ -96,9 +84,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           // TabBar And Top section Ended
           Padding(
             padding: EdgeInsets.only(
-                top: heightCheck > 843
-                    ? MediaQuery.of(context).size.height * 0.230
-                    : MediaQuery.of(context).size.height * 0.295),
+              top: MediaQuery.of(context).size.height * 0.265,
+            ),
             child: Container(
               padding: const EdgeInsets.only(left: 0, right: 0),
               child: TabBarView(
@@ -110,13 +97,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       future: _male,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
                     child: HomeWidget(
                       future: _female,
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
                     child: HomeWidget(
                       future: _kid,
