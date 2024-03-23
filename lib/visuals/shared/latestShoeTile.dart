@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 
-class StaggeredTitle extends StatefulWidget {
+class LatestShoesTile extends StatefulWidget {
   final shoeName, shoeType, imgUrl, id, price;
   bool isLiked;
 
-  StaggeredTitle({
+  LatestShoesTile({
     super.key,
     required this.shoeName,
     required this.shoeType,
@@ -18,10 +18,10 @@ class StaggeredTitle extends StatefulWidget {
     this.isLiked = false,
   });
   @override
-  State<StaggeredTitle> createState() => _StaggeredTitleState();
+  State<LatestShoesTile> createState() => _LatestShoesTileState();
 }
 
-class _StaggeredTitleState extends State<StaggeredTitle> {
+class _LatestShoesTileState extends State<LatestShoesTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,7 +78,7 @@ class _StaggeredTitleState extends State<StaggeredTitle> {
                 ),
                 Text(
                   "Rs." + widget.price.toString(),
-                  style: poppinStyle(Colors.black, 20, FontWeight.w500),
+                  style: poppinStyle(Colors.black, 20, FontWeight.w600),
                 ),
               ],
             )
