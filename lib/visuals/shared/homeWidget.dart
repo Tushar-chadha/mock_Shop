@@ -106,7 +106,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       } else {
                         return SizedBox(
                           height: MediaQuery.of(context).size.height > 900
-                              ? 120
+                              ? 200
                               : 100,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
