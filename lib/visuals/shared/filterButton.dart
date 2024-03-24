@@ -5,7 +5,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 
 Future<dynamic> filter(BuildContext context) {
-  List buttonImages = ["adidas", "gucci", "jordan", "nike"];
   double _minValue = 10000;
   double _maxValue = 40000;
   return showModalBottomSheet(
@@ -36,10 +35,10 @@ Future<dynamic> filter(BuildContext context) {
                         Colors.black, 30, FontWeight.bold, 1.2),
                   ),
                 ),
-                const optionWidget(
+                optionWidget(
                     optionList: ["Male", "Female", "Kids"],
                     optionTitle: "Gender"),
-                const optionWidget(
+                optionWidget(
                   optionList: ["Shoes", "Apparel", "Accessories"],
                   optionTitle: "Category",
                 ),
@@ -84,34 +83,7 @@ Future<dynamic> filter(BuildContext context) {
                           style: poppinStyle(Colors.black, 20, FontWeight.bold),
                         ),
                       ),
-                      SizedBox(
-                        height: 80,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: List.generate(
-                            buttonImages.length,
-                            (index) {
-                              return Container(
-                                alignment: Alignment.center,
-                                height: 80,
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: Colors.black,
-                                      style: BorderStyle.solid),
-                                ),
-                                child: Image(
-                                  image: AssetImage(
-                                      "assets/images/${buttonImages[index]}.png"),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                      BrandOptions(),
                     ],
                   ),
                 ),
@@ -124,17 +96,26 @@ Future<dynamic> filter(BuildContext context) {
   );
 }
 
-class optionWidget extends StatelessWidget {
+class optionWidget extends StatefulWidget {
   final List optionList;
   final String optionTitle;
-  const optionWidget({
+
+  optionWidget({
     super.key,
     required this.optionList,
     required this.optionTitle,
   });
 
   @override
+  State<optionWidget> createState() => _optionWidgetState();
+}
+
+class _optionWidgetState extends State<optionWidget> {
+  Set<int> selectedIndices = Set();
+
+  @override
   Widget build(BuildContext context) {
+    print(widget.optionTitle + selectedIndices.toString());
     return Container(
       margin: const EdgeInsets.only(
         bottom: 20,
@@ -145,35 +126,108 @@ class optionWidget extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             child: Text(
-              optionTitle,
+              widget.optionTitle,
               style: poppinStyle(Colors.black, 20, FontWeight.bold),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
-              optionList.length,
+              widget.optionList.length,
               (index) {
-                return Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  width: 110,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(
-                          width: 1,
-                          color: Colors.black,
-                          style: BorderStyle.solid)),
-                  child: Text(
-                    optionList[index],
-                    style: poppinStyle(Colors.black, 15, FontWeight.normal),
+                final isSelected = selectedIndices.contains(index);
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (isSelected) {
+                        selectedIndices.remove(index);
+                      } else {
+                        selectedIndices.add(index);
+                      }
+                    });
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 110,
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(
+                            width: 1,
+                            color: isSelected
+                                ? Colors.black
+                                : Colors.grey.shade400,
+                            style: BorderStyle.solid)),
+                    child: Text(
+                      widget.optionList[index],
+                      style: poppinStyle(
+                          isSelected ? Colors.black : Colors.grey.shade600,
+                          15,
+                          FontWeight.normal),
+                    ),
                   ),
                 );
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class BrandOptions extends StatefulWidget {
+  @override
+  State<BrandOptions> createState() => _BrandOptionsState();
+}
+
+class _BrandOptionsState extends State<BrandOptions> {
+  Set<int> selectedIndices = Set();
+  List buttonImages = ["adidas", "gucci", "jordan", "nike"];
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 80,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: List.generate(
+          buttonImages.length,
+          (index) {
+            final isSelected = selectedIndices.contains(index);
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (isSelected) {
+                    selectedIndices.remove(index);
+                  } else {
+                    selectedIndices.add(index);
+                  }
+                });
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 80,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.black : Colors.transparent,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(
+                    width: 1,
+                    color: isSelected ? Colors.black : Colors.grey,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                child: Image(
+                  color: isSelected ? Colors.grey.shade300 : Colors.black,
+                  image: AssetImage("assets/images/${buttonImages[index]}.png"),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
