@@ -43,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     double heightCheck = MediaQuery.of(context).size.height;
     print(heightCheck);
     TabController ShoeMenuController = TabController(length: 3, vsync: this);
-
     return SizedBox(
       height: MediaQuery.of(context)
           .size
@@ -94,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
+
                     child: HomeWidget(future: _male, TabIndex: 0),
                   ),
                   SizedBox(
@@ -103,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
                     child: HomeWidget(future: _kid, TabIndex: 2),
+                  ),
                   ),
                 ],
               ),
