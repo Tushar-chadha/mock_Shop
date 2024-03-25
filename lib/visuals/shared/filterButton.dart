@@ -8,11 +8,11 @@ Future<dynamic> filter(BuildContext context) {
   double _minValue = 10000;
   double _maxValue = 40000;
   return showModalBottomSheet(
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(30))),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(const Radius.circular(30))),
     isScrollControlled: true,
-    backgroundColor: Color.fromARGB(241, 255, 255, 255),
     barrierColor: Colors.white54,
+    backgroundColor: Colors.white,
     isDismissible: true,
     showDragHandle: true,
     elevation: 100,
@@ -150,7 +150,7 @@ class _optionWidgetState extends State<optionWidget> {
                     alignment: Alignment.center,
                     height: 50,
                     width: 110,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
@@ -213,7 +213,7 @@ class _BrandOptionsState extends State<BrandOptions> {
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.black : Colors.transparent,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   border: Border.all(
                     width: 1,
                     color: isSelected ? Colors.black : Colors.grey,
