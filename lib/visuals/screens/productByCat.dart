@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
-import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/filterButton.dart';
 import 'package:shop/visuals/shared/latestShoeTile.dart';
 import 'package:shop/visuals/shared/tabBar.dart';
@@ -11,7 +10,8 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class ProductByCat extends StatefulWidget {
-  const ProductByCat({super.key});
+  final int TabIndex;
+  const ProductByCat({super.key, required this.TabIndex});
 
   @override
   State<ProductByCat> createState() => _ProductByCatState();
@@ -20,7 +20,7 @@ class ProductByCat extends StatefulWidget {
 class _ProductByCatState extends State<ProductByCat>
     with TickerProviderStateMixin {
   late Future<List<Sneaker>> _male, _female, _kid;
-
+  late TabController ShoeMenuController = TabController(length: 3, vsync: this);
   void getMaleShoe() {
     _male = helper().getMaleShoesDataFromJson();
   }
@@ -36,15 +36,23 @@ class _ProductByCatState extends State<ProductByCat>
   @override
   void initState() {
     super.initState();
+    ShoeMenuController.animateTo(widget.TabIndex, curve: Curves.easeInOut);
     getMaleShoe();
     getfemaleShoe();
     getKidShoe();
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    ShoeMenuController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     AnimationController _animationController = AnimationController(vsync: this);
-    TabController ShoeMenuController = TabController(length: 3, vsync: this);
+
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(

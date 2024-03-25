@@ -7,9 +7,10 @@ import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/productCard.dart';
 
 class HomeWidget extends StatefulWidget {
+  final int TabIndex;
   final Future<List<Sneaker>> future;
 
-  const HomeWidget({super.key, required this.future});
+  const HomeWidget({super.key, required this.future, required this.TabIndex});
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
@@ -17,6 +18,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
+    print("${widget.TabIndex}" "this is passed here");
     // print(MediaQuery.of(context).size.height);
 
     return SizedBox(
@@ -81,7 +83,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                         GestureDetector(
                           onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ProductByCat(),
+                              builder: (context) => ProductByCat(
+                                TabIndex: widget.TabIndex,
+                              ), // by category
                             ),
                           ),
                           child: Text(

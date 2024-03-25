@@ -8,88 +8,96 @@ Future<dynamic> filter(BuildContext context) {
   double _minValue = 10000;
   double _maxValue = 40000;
   return showModalBottomSheet(
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(const Radius.circular(30))),
     isScrollControlled: true,
-    barrierColor: Colors.white54,
-    backgroundColor: Colors.white,
     isDismissible: true,
-    showDragHandle: true,
     elevation: 100,
     enableDrag: true,
     context: context,
     builder: (context) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 40),
-        child: Wrap(
-          alignment: WrapAlignment.spaceEvenly,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    "Filter",
-                    style: poppinStyleHeight(
-                        Colors.black, 30, FontWeight.bold, 1.2),
-                  ),
-                ),
-                optionWidget(
-                    optionList: ["Male", "Female", "Kids"],
-                    optionTitle: "Gender"),
-                optionWidget(
-                  optionList: ["Shoes", "Apparel", "Accessories"],
-                  optionTitle: "Category",
-                ),
-                Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        "Price",
-                        style: poppinStyle(Colors.black, 20, FontWeight.bold),
-                      ),
+      return Container(
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            )),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 40),
+          child: Wrap(
+            alignment: WrapAlignment.spaceEvenly,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      margin: const EdgeInsets.only(top: 5, bottom: 5),
+                      child: const Icon(AntDesign.minus,
+                          size: 50, color: Colors.black26)),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      "Filter",
+                      style: poppinStyleHeight(
+                          Colors.black, 30, FontWeight.bold, 1.2),
                     ),
-                    StatefulBuilder(
-                      builder: (context, setState) => RangeSlider(
-                          values: RangeValues(_minValue, _maxValue),
-                          min: 0,
-                          max: 100000,
-                          labels: RangeLabels(
-                              _minValue.toString(), _maxValue.toString()),
-                          divisions: 1000,
-                          activeColor: Colors.black,
-                          onChanged: (value) {
-                            setState(() {
-                              _minValue = value.start;
-                              _maxValue = value.end;
-                            });
-                          }),
-                    ),
-                  ],
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    bottom: 20,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  optionWidget(
+                      optionList: ["Male", "Female", "Kids"],
+                      optionTitle: "Gender"),
+                  optionWidget(
+                    optionList: ["Shoes", "Apparel", "Accessories"],
+                    optionTitle: "Category",
+                  ),
+                  Column(
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         child: Text(
-                          "Brands",
+                          "Price",
                           style: poppinStyle(Colors.black, 20, FontWeight.bold),
                         ),
                       ),
-                      BrandOptions(),
+                      StatefulBuilder(
+                        builder: (context, setState) => RangeSlider(
+                            values: RangeValues(_minValue, _maxValue),
+                            min: 0,
+                            max: 100000,
+                            labels: RangeLabels(
+                                _minValue.toString(), _maxValue.toString()),
+                            divisions: 1000,
+                            activeColor: Colors.black,
+                            onChanged: (value) {
+                              setState(() {
+                                _minValue = value.start;
+                                _maxValue = value.end;
+                              });
+                            }),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ],
+                  Container(
+                    margin: const EdgeInsets.only(
+                      bottom: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            "Brands",
+                            style:
+                                poppinStyle(Colors.black, 20, FontWeight.bold),
+                          ),
+                        ),
+                        BrandOptions(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       );
     },
