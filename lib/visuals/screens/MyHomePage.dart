@@ -93,7 +93,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
-
                     child: HomeWidget(future: _male, TabIndex: 0),
                   ),
                   SizedBox(
@@ -103,7 +102,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.405,
                     child: HomeWidget(future: _kid, TabIndex: 2),
-                  ),
                   ),
                 ],
               ),
