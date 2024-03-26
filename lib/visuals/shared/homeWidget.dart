@@ -53,22 +53,31 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => DescriptionScreen(
-                                          imgUrls: shoeData.imageUrl),
+                                        imgUrls: shoeData.imageUrl,
+                                        shoeName: shoeData.name,
+                                        shoeCategory: shoeData.category,
+                                        shoePrice:
+                                            (double.parse(shoeData.price) *
+                                                    83.22)
+                                                .round(),
+                                                shoeSizes: shoeData.sizes,
+                                      ),
                                     ),
                                   ),
                                   child: Container(
-                                      margin: EdgeInsets.fromLTRB(2, 0, 0, 0),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.6,
-                                      child: ProductCard(
-                                        id: 0,
-                                        shoeName: shoeData.name,
-                                        imgUrl: shoeData.imageUrl[0],
-                                        shoeType: shoeData.category,
-                                        price: (double.parse(shoeData.price) *
-                                                83.22)
-                                            .round(),
-                                      )),
+                                    margin: EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: ProductCard(
+                                      id: 0,
+                                      shoeName: shoeData.name,
+                                      imgUrl: shoeData.imageUrl[0],
+                                      shoeType: shoeData.category,
+                                      price:
+                                          (double.parse(shoeData.price) * 83.22)
+                                              .round(),
+                                    ),
+                                  ),
                                 );
                               }),
                         );
@@ -126,12 +135,19 @@ class _HomeWidgetState extends State<HomeWidget> {
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
+                              final shoeData = snapshot.data![index];
                               return GestureDetector(
                                 onTap: () => Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => DescriptionScreen(
-                                        imgUrls:
-                                            snapshot.data![index].imageUrl),
+                                       shoeSizes: shoeData.sizes,
+                                      imgUrls: shoeData.imageUrl,
+                                      shoeName: shoeData.name,
+                                      shoeCategory: shoeData.category,
+                                      shoePrice:
+                                          (double.parse(shoeData.price) * 83.22)
+                                              .round(),
+                                    ),
                                   ),
                                 ),
                                 child: Container(

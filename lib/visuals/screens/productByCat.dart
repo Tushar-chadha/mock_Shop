@@ -136,41 +136,46 @@ class _ProductByCatState extends State<ProductByCat>
         } else if (asyncSnapshot.hasError) {
           return Text(asyncSnapshot.error.toString());
         } else {
-          final List<Sneaker> shoeData = asyncSnapshot.data!;
+          final List<Sneaker> shoeItem = asyncSnapshot.data!;
           return StaggeredGridView.countBuilder(
             padding: const EdgeInsets.only(top: 0),
             shrinkWrap: true,
             crossAxisCount: 2,
             crossAxisSpacing: 2,
             mainAxisSpacing: 10,
-            itemCount: shoeData.length,
+            itemCount: shoeItem.length,
             scrollDirection: Axis.vertical,
             itemBuilder: ((context, index) {
-              final shoeItem = shoeData[index];
+              final shoeData = shoeItem[index];
               return GestureDetector(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) =>
-                        DescriptionScreen(imgUrls: shoeItem.imageUrl),
+                    builder: (context) => DescriptionScreen(
+                       shoeSizes: shoeData.sizes,
+                      shoePrice: (double.parse(shoeData.price) * 83.22).round(),
+                      imgUrls: shoeData.imageUrl,
+                      shoeName: shoeData.name,
+                      shoeCategory: shoeData.category,
+                    ),
                   ),
                 ),
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 0, bottom: 2, left: 4, right: 6),
                   child: LatestShoesTile(
-                      shoeName: shoeItem.name,
-                      shoeType: shoeItem.category,
-                      imgUrl: shoeItem.imageUrl[1],
-                      price: (double.parse(shoeItem.price) * 83.22).round(),
-                      id: shoeItem.id),
+                      shoeName: shoeData.name,
+                      shoeType: shoeData.category,
+                      imgUrl: shoeData.imageUrl[1],
+                      price: (double.parse(shoeData.price) * 83.22).round(),
+                      id: shoeData.id),
                 ),
               );
             }),
             staggeredTileBuilder: (index) => StaggeredTile.extent(
                 (index % 2 == 0) ? 1 : 1,
                 (index % 3 == 1 || index % 6 == 3)
-                    ? MediaQuery.of(context).size.height * 0.33
-                    : MediaQuery.of(context).size.height * 0.30),
+                    ? MediaQuery.of(context).size.height * 0.36
+                    : MediaQuery.of(context).size.height * 0.31),
           );
         }
       },
