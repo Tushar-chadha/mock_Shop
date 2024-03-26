@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/controller/mainScreenController.dart';
+import 'package:shop/controller/productController.dart';
 import 'package:shop/visuals/screens/MyHomePage.dart';
 import 'package:shop/visuals/screens/mainScreen.dart';
 
@@ -10,7 +11,8 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => MainScreenNotifier())
+      ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
+      ChangeNotifierProvider(create: (context) => ProductNotifier())
     ], child: const MyApp()));
   });
 }

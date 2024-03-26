@@ -151,10 +151,7 @@ class _ProductByCatState extends State<ProductByCat>
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => DescriptionScreen(
-                       shoeSizes: shoeData.sizes,
-                      shoePrice: (double.parse(shoeData.price) * 83.22).round(),
-                      imgUrls: shoeData.imageUrl,
-                      shoeName: shoeData.name,
+                      id: shoeData.id,
                       shoeCategory: shoeData.category,
                     ),
                   ),

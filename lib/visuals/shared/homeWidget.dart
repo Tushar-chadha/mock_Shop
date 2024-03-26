@@ -19,9 +19,6 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    print("${widget.TabIndex}" "this is passed here");
-    // print(MediaQuery.of(context).size.height);
-
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -53,14 +50,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => DescriptionScreen(
-                                        imgUrls: shoeData.imageUrl,
-                                        shoeName: shoeData.name,
+                                        id: shoeData.id,
                                         shoeCategory: shoeData.category,
-                                        shoePrice:
-                                            (double.parse(shoeData.price) *
-                                                    83.22)
-                                                .round(),
-                                                shoeSizes: shoeData.sizes,
                                       ),
                                     ),
                                   ),
@@ -140,13 +131,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 onTap: () => Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => DescriptionScreen(
-                                       shoeSizes: shoeData.sizes,
-                                      imgUrls: shoeData.imageUrl,
-                                      shoeName: shoeData.name,
+                                      id: shoeData.id,
                                       shoeCategory: shoeData.category,
-                                      shoePrice:
-                                          (double.parse(shoeData.price) * 83.22)
-                                              .round(),
                                     ),
                                   ),
                                 ),
