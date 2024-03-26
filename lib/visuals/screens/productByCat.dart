@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
+import 'package:shop/visuals/screens/descriptionScreen.dart';
 import 'package:shop/visuals/shared/filterButton.dart';
 import 'package:shop/visuals/shared/latestShoeTile.dart';
 import 'package:shop/visuals/shared/tabBar.dart';
@@ -146,15 +147,23 @@ class _ProductByCatState extends State<ProductByCat>
             scrollDirection: Axis.vertical,
             itemBuilder: ((context, index) {
               final shoeItem = shoeData[index];
-              return Container(
-                padding:
-                    const EdgeInsets.only(top: 0, bottom: 2, left: 4, right: 6),
-                child: LatestShoesTile(
-                    shoeName: shoeItem.name,
-                    shoeType: shoeItem.category,
-                    imgUrl: shoeItem.imageUrl[1],
-                    price: (double.parse(shoeItem.price) * 83.22).round(),
-                    id: shoeItem.id),
+              return GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        DescriptionScreen(imgUrls: shoeItem.imageUrl),
+                  ),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 0, bottom: 2, left: 4, right: 6),
+                  child: LatestShoesTile(
+                      shoeName: shoeItem.name,
+                      shoeType: shoeItem.category,
+                      imgUrl: shoeItem.imageUrl[1],
+                      price: (double.parse(shoeItem.price) * 83.22).round(),
+                      id: shoeItem.id),
+                ),
               );
             }),
             staggeredTileBuilder: (index) => StaggeredTile.extent(
