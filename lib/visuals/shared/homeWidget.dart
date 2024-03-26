@@ -2,14 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shop/model/sneakerModel.dart';
+import 'package:shop/visuals/screens/descriptionScreen.dart';
 import 'package:shop/visuals/screens/productByCat.dart';
 import 'package:shop/visuals/shared/appStyles.dart';
 import 'package:shop/visuals/shared/productCard.dart';
 
 class HomeWidget extends StatefulWidget {
+  final int TabIndex;
   final Future<List<Sneaker>> future;
 
-  const HomeWidget({super.key, required this.future});
+  const HomeWidget({super.key, required this.future, required this.TabIndex});
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
@@ -17,8 +19,6 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size.height);
-
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -46,7 +46,16 @@ class _HomeWidgetState extends State<HomeWidget> {
                               itemCount: shoelist!.length,
                               itemBuilder: (context, index) {
                                 final shoeData = shoelist[index];
-                                return Container(
+                                return GestureDetector(
+                                  onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => DescriptionScreen(
+                                        id: shoeData.id,
+                                        shoeCategory: shoeData.category,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Container(
                                     margin: EdgeInsets.fromLTRB(2, 0, 0, 0),
                                     width:
                                         MediaQuery.of(context).size.width * 0.6,
@@ -58,7 +67,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       price:
                                           (double.parse(shoeData.price) * 83.22)
                                               .round(),
-                                    ));
+                                    ),
+                                  ),
+                                );
                               }),
                         );
                       }
@@ -81,7 +92,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                         GestureDetector(
                           onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ProductByCat(),
+                              builder: (context) => ProductByCat(
+                                TabIndex: widget.TabIndex,
+                              ), // by category
                             ),
                           ),
                           child: Text(
@@ -113,27 +126,39 @@ class _HomeWidgetState extends State<HomeWidget> {
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                padding: const EdgeInsets.all(2),
-                                margin: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset: const Offset(2, 2),
+                              final shoeData = snapshot.data![index];
+                              return GestureDetector(
+                                onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => DescriptionScreen(
+                                      id: shoeData.id,
+                                      shoeCategory: shoeData.category,
                                     ),
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(15),
                                   ),
                                 ),
-                                child: CachedNetworkImage(
-                                    filterQuality: FilterQuality.high,
-                                    imageUrl:
-                                        snapshot.data![index].imageUrl[1]),
+                                child: Container(
+                                  padding: const EdgeInsets.all(2),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.3),
+                                        spreadRadius: 1,
+                                        blurRadius: 3,
+                                        offset: const Offset(2, 2),
+                                      ),
+                                    ],
+                                    color: Colors.white,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                  ),
+                                  child: CachedNetworkImage(
+                                      filterQuality: FilterQuality.high,
+                                      imageUrl:
+                                          snapshot.data![index].imageUrl[1]),
+                                ),
                               );
                             },
                           ),
