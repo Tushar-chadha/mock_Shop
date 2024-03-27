@@ -41,7 +41,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   }
 
   int currentIndex = 0;
-  int isSelectedSize = 20;
+  bool isSelectedSize = false;
   double ratingText = 1.0;
   @override
   Widget build(BuildContext context) {
@@ -71,9 +71,8 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                             height: commonHeight * 0.4,
                             child: PageView.builder(
                               onPageChanged: (value) {
-                                setState(() {
-                                  currentIndex = value;
-                                });
+                                productNotifier.SetActivePage = value;
+                                currentIndex = productNotifier.activePage;
                               },
                               pageSnapping: true,
                               itemCount: sneakerData.imageUrl.length,
@@ -99,14 +98,19 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 InkWell(
-                                  onTap: () => Navigator.pop(context),
+                                  onTap: () {
+                                    productNotifier.shoeSize.clear();
+                                    print(productNotifier.shoeSize);
+                                    print(sneakerData.sizes);
+                                    Navigator.pop(context);
+                                  },
                                   child: const Icon(
                                     Entypo.chevron_left,
                                     size: 30,
                                   ),
                                 ),
                                 const Icon(Entypo.dots_three_horizontal,
-                                    size: 30)
+                                    size: 30),
                               ],
                             ),
                           ),
@@ -155,8 +159,8 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               topRight: Radius.circular(40),
                             ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: ListView(
+                            padding: EdgeInsets.zero,
                             children: [
                               Text(
                                 sneakerData.name,
@@ -195,9 +199,9 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                             );
                                           },
                                           onRatingUpdate: (rating) {
-                                            setState(() {
-                                              ratingText = rating;
-                                            });
+                                            productNotifier
+                                                .updateRating(rating);
+                                            ratingText = productNotifier.rating;
                                           },
                                         ),
                                         Text("(${ratingText.toString()})")
@@ -212,51 +216,6 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                 style: poppinStyle(
                                     Colors.black, 22, FontWeight.w600),
                               ),
-                              const Gap(5),
-                              Text(
-                                "Select sizes",
-                                style: poppinStyle(
-                                    Colors.black, 20, FontWeight.w700),
-                              ),
-                              SizedBox(
-                                height: 50,
-                                width: double.infinity,
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            isSelectedSize = index;
-                                          });
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: isSelectedSize == index
-                                                ? Colors.black
-                                                : Colors.grey.shade300,
-                                          ),
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0, 10, 10, 0),
-                                          child: Text(
-                                            sneakerData.sizes[index]["size"]
-                                                .toString(),
-                                            style: poppinStyle(
-                                                isSelectedSize == index
-                                                    ? Colors.grey.shade300
-                                                    : Colors.black,
-                                                15,
-                                                FontWeight.bold),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    itemCount: sneakerData.sizes.length),
-                              ),
                               Container(
                                 margin:
                                     const EdgeInsets.fromLTRB(10, 20, 10, 20),
@@ -266,22 +225,28 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                         color: Colors.black12)),
                               ),
                               Text(
-                                sneakerData.title,
+                                "Select sizes",
                                 style: poppinStyle(
-                                    Colors.black, 25, FontWeight.w700),
+                                    Colors.black, 20, FontWeight.w700),
                               ),
-                              const Gap(5),
-                              Container(
-                                height: 160,
-                                child: SingleChildScrollView(
-                                  child: Text(
-                                    sneakerData.description,
-                                    textAlign: TextAlign.justify,
-                                    style: const TextStyle(),
-                                  ),
+                              SizedBox(
+                                height: 50,
+                                width: double.infinity,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: sneakerData.sizes.length,
+                                  itemBuilder: (context, index) {
+                                    final sizes =
+                                        productNotifier.shoeSize[index];
+                                    return actionChipForSizes(
+                                      sizes: sizes,
+                                      index: index,
+                                      productNotifier: productNotifier,
+                                    );
+                                  }, //ShoeSizeWidget
                                 ),
                               ),
-                              const Gap(20),
+                              Gap(15),
                               Center(
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
@@ -300,7 +265,30 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                         Colors.white, 15, FontWeight.bold),
                                   ),
                                 ),
-                              )
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        strokeAlign: 0.2,
+                                        color: Colors.black12)),
+                              ),
+                              Text(
+                                sneakerData.title,
+                                style: poppinStyle(
+                                    Colors.black, 25, FontWeight.w700),
+                              ),
+                              const Gap(5),
+                              Container(
+                                height: 160,
+                                child: Text(
+                                  sneakerData.description,
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(),
+                                ),
+                              ),
+                              const Gap(20),
                             ],
                           ),
                         ),
@@ -311,6 +299,50 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
               },
             );
           }
+        },
+      ),
+    );
+  }
+}
+
+class actionChipForSizes extends StatelessWidget {
+  final int index;
+  final ProductNotifier productNotifier;
+  const actionChipForSizes({
+    super.key,
+    required this.sizes,
+    required this.productNotifier,
+    required this.index,
+  });
+  final sizes;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+      ),
+      child: ChoiceChip(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(60),
+            side: const BorderSide(
+                color: Colors.black, width: 1, style: BorderStyle.solid)),
+        disabledColor: Colors.white,
+        label: Text(
+          sizes['size'],
+          style: poppinStyle(sizes['isSelected'] ? Colors.white : Colors.black,
+              18, FontWeight.w500),
+        ),
+        selectedColor: Colors.black,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        selected: sizes['isSelected'],
+        onSelected: (newState) {
+          if (productNotifier.shoeSize.contains(sizes['size'])) {
+            productNotifier.shoeSize.remove(sizes['size']);
+          } else {
+            productNotifier.shoeSize.add(sizes['size']);
+          }
+          productNotifier.isToggle(index);
+          print(productNotifier.shoeSize);
         },
       ),
     );

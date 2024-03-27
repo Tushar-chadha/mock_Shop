@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/controller/productController.dart';
 import 'package:shop/model/sneakerModel.dart';
 import 'package:shop/visuals/screens/descriptionScreen.dart';
 import 'package:shop/visuals/screens/productByCat.dart';
@@ -19,6 +20,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
@@ -31,7 +33,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                   child: FutureBuilder<List<Sneaker>>(
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator.adaptive();
+                        return const CircularProgressIndicator.adaptive();
                       } else if (snapshot.hasError) {
                         return Text(
                           snapshot.error.toString(),
@@ -47,16 +49,24 @@ class _HomeWidgetState extends State<HomeWidget> {
                               itemBuilder: (context, index) {
                                 final shoeData = shoelist[index];
                                 return GestureDetector(
-                                  onTap: () => Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => DescriptionScreen(
-                                        id: shoeData.id,
-                                        shoeCategory: shoeData.category,
+                                  onTap: () {
+                                    productNotifier.shoeSize = shoeData.sizes;
+                                    print(shoeData.sizes);
+                                    print(productNotifier.shoeSize);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return DescriptionScreen(
+                                            id: shoeData.id,
+                                            shoeCategory: shoeData.category,
+                                          );
+                                        },
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
                                   child: Container(
-                                    margin: EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                    margin:
+                                        const EdgeInsets.fromLTRB(2, 0, 0, 0),
                                     width:
                                         MediaQuery.of(context).size.width * 0.6,
                                     child: ProductCard(
@@ -110,7 +120,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     future: widget.future,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator.adaptive();
+                        return const CircularProgressIndicator.adaptive();
                       } else if (snapshot.hasError) {
                         return Text(
                           snapshot.error.toString(),
@@ -128,14 +138,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                             itemBuilder: (context, index) {
                               final shoeData = snapshot.data![index];
                               return GestureDetector(
-                                onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => DescriptionScreen(
-                                      id: shoeData.id,
-                                      shoeCategory: shoeData.category,
+                                onTap: () {
+                                  productNotifier.shoeSize = shoeData.sizes;
+                                  print(productNotifier.shoeSize);
+                                  print(productNotifier.shoeSize);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return DescriptionScreen(
+                                          id: shoeData.id,
+                                          shoeCategory: shoeData.category,
+                                        );
+                                      },
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.all(2),
                                   margin:
