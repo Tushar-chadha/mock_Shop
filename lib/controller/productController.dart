@@ -10,17 +10,35 @@ class ProductNotifier extends ChangeNotifier {
   }
 
   List<dynamic> _shoeSize = [];
-  List<dynamic> get shoeSize => _shoeSize;
+  List<dynamic> get getShoeSize => _shoeSize;
+  set SetShoeSize(List<dynamic> newSize) {
+    _shoeSize = newSize;
+    notifyListeners();
+  }
 
   void isToggle(int index) {
-    if (index >= 0 && index < _shoeSize.length) {
-      _shoeSize[index]["isSelected"] = !_shoeSize[index]["isSelected"];
+    for (int i = 0; i < _shoeSize.length; i++) {
+      if (index == i) {
+        _shoeSize[i]["isSelected"] = !_shoeSize[index]["isSelected"];
+      }
+      notifyListeners();
+    }
+    print("final List is after all selection = ${_shoeSize}");
+  }
+
+  void unSelectALl() {
+    for (int i = 0; i < _shoeSize.length; i++) {
+      _shoeSize[i]["isSelected"] = false;
+      print(_shoeSize);
       notifyListeners();
     }
   }
 
-  set shoeSize(List<dynamic> newSize) {
-    _shoeSize = newSize;
+  List _finalShoeSize = [];
+  List<dynamic> get finalShoeSizeGetter => _finalShoeSize;
+  set setterFinalShoeSize(List<double> newSize) {
+    _finalShoeSize = newSize;
+    _finalShoeSize.sort();
     notifyListeners();
   }
 

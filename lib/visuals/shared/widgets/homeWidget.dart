@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/controller/productController.dart';
 import 'package:shop/model/sneakerModel.dart';
-import 'package:shop/visuals/screens/descriptionScreen.dart';
-import 'package:shop/visuals/screens/productByCat.dart';
-import 'package:shop/visuals/shared/appStyles.dart';
-import 'package:shop/visuals/shared/productCard.dart';
+import 'package:shop/visuals/screens/secondary_pages/descriptionScreen.dart';
+import 'package:shop/visuals/screens/secondary_pages/productByCat.dart';
+import 'package:shop/visuals/shared/utilities/appStyles.dart';
+import 'package:shop/visuals/shared/widgets/productCard.dart';
 
 class HomeWidget extends StatefulWidget {
   final int TabIndex;
@@ -50,9 +50,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 final shoeData = shoelist[index];
                                 return GestureDetector(
                                   onTap: () {
-                                    productNotifier.shoeSize = shoeData.sizes;
-                                    print(shoeData.sizes);
-                                    print(productNotifier.shoeSize);
+                                    final sizes = shoeData.sizes;
+                                    productNotifier.SetShoeSize = sizes;
+                                    print(productNotifier.getShoeSize);
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) {
@@ -139,9 +139,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                               final shoeData = snapshot.data![index];
                               return GestureDetector(
                                 onTap: () {
-                                  productNotifier.shoeSize = shoeData.sizes;
-                                  print(productNotifier.shoeSize);
-                                  print(productNotifier.shoeSize);
+                                  productNotifier.SetShoeSize = shoeData.sizes;
+                                  print(productNotifier.getShoeSize);
+                                  print(productNotifier.getShoeSize);
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) {

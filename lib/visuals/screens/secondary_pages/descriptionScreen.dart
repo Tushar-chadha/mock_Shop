@@ -9,7 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:shop/controller/productController.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
-import 'package:shop/visuals/shared/appStyles.dart';
+import 'package:shop/visuals/screens/primary_pages/cart_page.dart';
+import 'package:shop/visuals/shared/utilities/appStyles.dart';
 
 class DescriptionScreen extends StatefulWidget {
   final String id, shoeCategory;
@@ -43,6 +44,8 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   int currentIndex = 0;
   bool isSelectedSize = false;
   double ratingText = 1.0;
+  late int CurrentShoeIndex;
+
   @override
   Widget build(BuildContext context) {
     var commonHeight = MediaQuery.of(context).size.height;
@@ -99,10 +102,11 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    productNotifier.shoeSize.clear();
-                                    print(productNotifier.shoeSize);
-                                    print(sneakerData.sizes);
                                     Navigator.pop(context);
+                                    productNotifier.unSelectALl();
+                                    productNotifier.finalShoeSizeGetter.clear();
+
+                                    print(productNotifier.finalShoeSizeGetter);
                                   },
                                   child: const Icon(
                                     Entypo.chevron_left,
@@ -234,12 +238,12 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                 width: double.infinity,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: sneakerData.sizes.length,
+                                  itemCount: productNotifier.getShoeSize.length,
                                   itemBuilder: (context, index) {
-                                    final sizes =
-                                        productNotifier.shoeSize[index];
+                                    CurrentShoeIndex = index;
+
                                     return actionChipForSizes(
-                                      sizes: sizes,
+                                      sizes: productNotifier.getShoeSize[index],
                                       index: index,
                                       productNotifier: productNotifier,
                                     );
@@ -247,24 +251,14 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                 ),
                               ),
                               Gap(15),
-                              Center(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 15,
-                                  ),
-                                  alignment: Alignment.center,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  child: Text(
-                                    "Add to bag",
-                                    style: poppinStyle(
-                                        Colors.white, 15, FontWeight.bold),
-                                  ),
-                                ),
+                              CheckoutButton(
+                                id: sneakerData.id,
+                                imgUrl: sneakerData.imageUrl,
+                                shoeType: sneakerData.category,
+                                shoeName: sneakerData.name,
+                                price: shoePrice,
+                                sizeSelected:
+                                    productNotifier.finalShoeSizeGetter,
                               ),
                               Container(
                                 margin:
@@ -305,6 +299,63 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   }
 }
 
+class CheckoutButton extends StatefulWidget {
+  CheckoutButton({
+    super.key,
+    required this.shoeName,
+    required this.price,
+    required this.sizeSelected,
+    required this.imgUrl,
+    required this.id,
+    required this.shoeType,
+  });
+  final shoeName, price, imgUrl, id, shoeType;
+  List sizeSelected;
+  void sort() {
+    sizeSelected.sort((a, b) => double.parse(a).compareTo(double.parse(b)));
+  }
+
+  @override
+  State<CheckoutButton> createState() => _CheckoutButtonState();
+}
+
+class _CheckoutButtonState extends State<CheckoutButton> {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        widget.sort();
+        print(widget.shoeName);
+        print(widget.price.toString());
+        print(widget.sizeSelected);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => CartScreen(
+              sizeList: widget.sizeSelected,
+            ),
+          ),
+        );
+      },
+      child: Center(
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 15,
+          ),
+          alignment: Alignment.center,
+          width: MediaQuery.of(context).size.width * 0.8,
+          decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          child: Text(
+            "Add to bag",
+            style: poppinStyle(Colors.white, 15, FontWeight.bold),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class actionChipForSizes extends StatelessWidget {
   final int index;
   final ProductNotifier productNotifier;
@@ -336,13 +387,12 @@ class actionChipForSizes extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         selected: sizes['isSelected'],
         onSelected: (newState) {
-          if (productNotifier.shoeSize.contains(sizes['size'])) {
-            productNotifier.shoeSize.remove(sizes['size']);
+          if (productNotifier.finalShoeSizeGetter.contains(sizes['size'])) {
+            productNotifier.finalShoeSizeGetter.remove(sizes['size']);
           } else {
-            productNotifier.shoeSize.add(sizes['size']);
+            productNotifier.finalShoeSizeGetter.add(sizes['size']);
           }
           productNotifier.isToggle(index);
-          print(productNotifier.shoeSize);
         },
       ),
     );

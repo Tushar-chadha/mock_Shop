@@ -5,11 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:shop/controller/productController.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
-import 'package:shop/visuals/screens/descriptionScreen.dart';
-import 'package:shop/visuals/screens/descriptionSliverPage.dart';
-import 'package:shop/visuals/shared/filterButton.dart';
-import 'package:shop/visuals/shared/latestShoeTile.dart';
-import 'package:shop/visuals/shared/tabBar.dart';
+import 'package:shop/visuals/screens/secondary_pages/descriptionScreen.dart';
+import 'package:shop/visuals/shared/widgets/filterButton.dart';
+import 'package:shop/visuals/shared/widgets/latestShoeTile.dart';
+import 'package:shop/visuals/shared/widgets/tabBar.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -154,7 +153,7 @@ class _ProductByCatState extends State<ProductByCat>
                 final shoeData = shoeItem[index];
                 return GestureDetector(
                   onTap: () {
-                    productNotifier.shoeSize = shoeData.sizes;
+                    productNotifier.SetShoeSize = shoeData.sizes;
 
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) {

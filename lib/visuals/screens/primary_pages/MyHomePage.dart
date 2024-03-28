@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
-import 'package:shop/visuals/shared/appStyles.dart';
-import 'package:shop/visuals/shared/homeWidget.dart';
-import 'package:shop/visuals/shared/productCard.dart';
-import 'package:shop/visuals/shared/tabBar.dart';
+import 'package:shop/visuals/shared/utilities/appStyles.dart';
+import 'package:shop/visuals/shared/widgets/homeWidget.dart';
+import 'package:shop/visuals/shared/widgets/productCard.dart';
+import 'package:shop/visuals/shared/widgets/tabBar.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
