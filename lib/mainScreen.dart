@@ -29,9 +29,7 @@ class _mainScreenState extends State<mainScreen> {
     return Consumer<MainScreenNotifier>(
       builder: (context, mainScreenNotifier, child) {
         int currentIndex = mainScreenNotifier.pageIndex;
-        if (kDebugMode) {
-          print("current Page Index " + currentIndex.toString());
-        }
+
         return Scaffold(
           backgroundColor: const Color(0xFFE2E2E2),
           bottomNavigationBar: SafeArea(

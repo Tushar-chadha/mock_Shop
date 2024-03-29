@@ -52,7 +52,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   onTap: () {
                                     final sizes = shoeData.sizes;
                                     productNotifier.SetShoeSize = sizes;
-                                    print(productNotifier.getShoeSize);
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) {
@@ -139,9 +138,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                               final shoeData = snapshot.data![index];
                               return GestureDetector(
                                 onTap: () {
-                                  productNotifier.SetShoeSize = shoeData.sizes;
-                                  print(productNotifier.getShoeSize);
-                                  print(productNotifier.getShoeSize);
+                                  // productNotifier.SetShoeSize = shoeData.sizes;
+
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) {

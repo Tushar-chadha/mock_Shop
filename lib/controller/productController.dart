@@ -19,26 +19,35 @@ class ProductNotifier extends ChangeNotifier {
   void isToggle(int index) {
     for (int i = 0; i < _shoeSize.length; i++) {
       if (index == i) {
-        _shoeSize[i]["isSelected"] = !_shoeSize[index]["isSelected"];
+        for (int i = 0; i < _shoeSize.length; i++) {
+          _shoeSize[i]["isSelected"] = false;
+        }
+        _shoeSize[i]["isSelected"] = true;
+        _finalShoeSize = _shoeSize[i]["size"];
       }
       notifyListeners();
     }
-    print("final List is after all selection = ${_shoeSize}");
   }
 
   void unSelectALl() {
     for (int i = 0; i < _shoeSize.length; i++) {
       _shoeSize[i]["isSelected"] = false;
-      print(_shoeSize);
+
       notifyListeners();
     }
   }
 
-  List _finalShoeSize = [];
-  List<dynamic> get finalShoeSizeGetter => _finalShoeSize;
-  set setterFinalShoeSize(List<double> newSize) {
+  String _finalShoeSize = "";
+  String get finalShoeSizeGetter => _finalShoeSize;
+  set setterFinalShoeSize(String newSize) {
     _finalShoeSize = newSize;
-    _finalShoeSize.sort();
+    notifyListeners();
+  }
+
+  int _quantity = 0;
+  int get quantityGetter => _quantity;
+  set setQuantity(int newQuantity) {
+    _quantity = newQuantity;
     notifyListeners();
   }
 
