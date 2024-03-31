@@ -322,7 +322,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                     return _createCart(
                                       {
                                         "id": sneakerData.id,
-                                        "name": sneakerData.category,
+                                        "name": sneakerData.name,
                                         "category": sneakerData.category,
                                         "price": shoePrice,
                                         "size":

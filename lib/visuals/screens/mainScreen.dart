@@ -20,9 +20,7 @@ class _mainScreenState extends State<mainScreen> {
     MyHomePage(),
     SearchPage(),
     MyHomePage(),
-    CartScreen(
-      sizeList: [],
-    ),
+    CartScreen(),
     ProfileScreen()
   ];
 
