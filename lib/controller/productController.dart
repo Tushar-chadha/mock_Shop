@@ -44,13 +44,6 @@ class ProductNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _quantity = 0;
-  int get quantityGetter => _quantity;
-  set setQuantity(int newQuantity) {
-    _quantity = newQuantity;
-    notifyListeners();
-  }
-
   double _rating = 1.0;
   double get rating => _rating;
   void updateRating(double rating) {

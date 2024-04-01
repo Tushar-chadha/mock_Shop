@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/controller/cartProvider.dart';
 import 'package:shop/controller/mainScreenController.dart';
 import 'package:shop/controller/productController.dart';
 import 'package:shop/visuals/screens/primary_pages/MyHomePage.dart';
@@ -19,7 +20,8 @@ void main() async {
       .then((_) {
     runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => MainScreenNotifier()),
-      ChangeNotifierProvider(create: (context) => ProductNotifier())
+      ChangeNotifierProvider(create: (context) => ProductNotifier()),
+      ChangeNotifierProvider(create: (context) => CartNotifier()),
     ], child: const MyApp()));
   });
 }

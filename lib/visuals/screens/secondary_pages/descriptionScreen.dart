@@ -1,23 +1,26 @@
-import 'package:toast/toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:gap/gap.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/controller/cartProvider.dart';
 import 'package:shop/controller/productController.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
 import 'package:shop/visuals/shared/utilities/appStyles.dart';
 import 'package:shop/visuals/shared/widgets/action_chip_for_sizes.dart';
 import 'package:shop/visuals/shared/widgets/checkout_button.dart';
+import 'package:toast/toast.dart';
 
 class DescriptionScreen extends StatefulWidget {
   final String id, shoeCategory;
 
   const DescriptionScreen(
-      {super.key, required this.id, required this.shoeCategory});
+      {Key? key, required this.id, required this.shoeCategory})
+      : super(key: key);
 
   @override
   State<DescriptionScreen> createState() => _DescriptionScreenState();
@@ -31,7 +34,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   final _cartBox = Hive.box("cart_box");
 
   Future<void> _createCart(Map<String, dynamic> newCart) async {
-    await _cartBox.add(newCart); //cart shared prefrences
+    await _cartBox.add(newCart); //cart shared preferences
     print(_cartBox.values);
   }
 
@@ -68,9 +71,9 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
             } else if (asyncSnapshot.hasError) {
               return Text(asyncSnapshot.error.toString());
             } else {
-              return Consumer<ProductNotifier>(
-                builder:
-                    (BuildContext context, productNotifier, Widget? child) {
+              return Consumer2<ProductNotifier, CartNotifier>(
+                builder: (BuildContext context, productNotifier, cartNotifier,
+                    Widget? child) {
                   final sneakerData = asyncSnapshot.data!;
                   final shoePrice =
                       (double.parse(sneakerData.price) * 83.22).roundToDouble();
@@ -112,7 +115,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                   onTap: () {
                                     Navigator.pop(context);
                                     productNotifier.unSelectALl();
-                                    productNotifier.setQuantity = 0;
+                                    cartNotifier.setQuantity = 0;
                                   },
                                   child: const Icon(
                                     Entypo.chevron_left,
@@ -229,14 +232,13 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                         Colors.black, 22, FontWeight.w600),
                                   ),
                                   Builder(builder: (context) {
-                                    quantity = productNotifier.quantityGetter;
+                                    quantity = cartNotifier.quantityGetter;
                                     return Row(
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            productNotifier.setQuantity =
-                                                productNotifier.quantityGetter +
-                                                    1;
+                                            cartNotifier.setQuantity =
+                                                cartNotifier.quantityGetter + 1;
                                           },
                                           child: const Icon(
                                             Icons.add_box,
@@ -250,15 +252,13 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            productNotifier
-                                                .setQuantity = productNotifier
-                                                        .quantityGetter ==
-                                                    0
-                                                ? productNotifier.setQuantity =
-                                                    0
-                                                : productNotifier
-                                                        .quantityGetter -
-                                                    1;
+                                            cartNotifier.setQuantity =
+                                                cartNotifier.quantityGetter == 0
+                                                    ? cartNotifier.setQuantity =
+                                                        0
+                                                    : cartNotifier
+                                                            .quantityGetter -
+                                                        1;
                                           },
                                           child: const Icon(
                                             AntDesign.minussquare,
@@ -311,7 +311,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                     );
                                   } else {
                                     productNotifier.unSelectALl();
-                                    productNotifier.setQuantity = 0;
+                                    cartNotifier.setQuantity = 0;
                                     Toast.show(
                                         "Item added to cart Successfully",
                                         textStyle: poppinStyle(Colors.white, 15,
