@@ -50,41 +50,40 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                   "Cart",
                   style: poppinStyle(Colors.black, 40, FontWeight.bold),
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      color: Colors.black,
-                      onPressed: () {
-                        setState(() {
-                          _cartBox.clear();
-                          cart.clear();
-                          print(cart);
-                        });
-                      },
-                      icon: Icon(MaterialCommunityIcons.cart_off),
-                    ),
-                    const SizedBox(
-                        width:
-                            8), // Add some spacing between the IconButton and Text
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _cartBox.clear();
-                          cart.clear();
-                          print(cart);
-                        });
-                      },
-                      child: Text(
-                        'Remove All',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16, // Adjust font size as needed
-                          // Add other text styles as needed
+                ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                      backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  onPressed: () {
+                    setState(() {
+                      cart.clear();
+                      _cartBox.clear();
+                    });
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(
+                        MaterialCommunityIcons.cart_off,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                      Gap(5),
+                      Text(
+                        'Remove All',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -94,17 +93,12 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
               padding: EdgeInsets.fromLTRB(0, commonSize.height * 0.07, 0, 0),
               height: commonSize.height,
               child: cart.isEmpty
-                  ? Center(
-                      child: Container(
+                  ? Container(
+                      alignment: Alignment.center,
                       padding: const EdgeInsets.all(10),
-                      width: 250,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(color: Colors.black, width: 2)),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Empty Cart.",
@@ -112,123 +106,108 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                             style:
                                 poppinStyle(Colors.black, 30, FontWeight.bold),
                           ),
-                          InkWell(
-                            onTap: () {
+                          const Gap(5),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black87),
+                              shape: MaterialStateProperty.all(
+                                const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
                               mainScreenNotifier.pageIndex = 0;
                             },
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                          topLeft: Radius.circular(10)),
-                                      color: Colors.black),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10.0),
-                                      child: Text(
-                                        "Let's Add Shoes",
-                                        style: poppinStyle(
-                                            Colors.white, 20, FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 10,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10)),
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              "Back to homepage",
+                              style: poppinStyle(
+                                  Colors.white, 20, FontWeight.w500),
                             ),
-                          )
+                          ),
                         ],
                       ),
-                    ))
+                    )
                   : ListView.builder(
                       padding: EdgeInsets.zero,
                       itemCount: cart.length,
                       itemBuilder: (_, index) {
-                        SlidableController _slidableController =
-                            SlidableController(this);
-                        return Slidable(
-                          key: const ValueKey(1),
-                          controller: _slidableController,
-                          direction: Axis.horizontal,
-                          closeOnScroll: true,
-                          startActionPane: ActionPane(
-                            motion: const DrawerMotion(),
-                            dismissible: DismissiblePane(
-                              onDismissed: () {
-                                setState(() {
-                                  _cartBox.deleteAt(index);
-                                });
-                              },
-                            ),
-                            children: [
-                              SlidableAction(
-                                autoClose: true,
-                                onPressed: (context) => null,
-                                backgroundColor: const Color(0xFFFE4A49),
-                                foregroundColor: Colors.white,
-                                icon: Icons.delete,
-                                label: 'Swipe to remove',
-                              ),
-                            ],
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            height: 100,
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 12),
+                          child: Dismissible(
+                            key: UniqueKey(),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (direction) {
+                              setState(() {
+                                cart.removeAt(index);
+                                _cartBox.deleteAt(index);
+                              });
+                            },
+                            background: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.black,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Row(
-                              children: [
-                                CachedNetworkImage(
-                                    imageUrl: cart[index]['imgUrl']),
-                                const Gap(10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(
-                                      cart[index]['name'],
-                                      style: poppinStyle(
-                                          Colors.black, 18, FontWeight.bold),
-                                    ),
-                                    Text(
-                                      cart[index]['category'],
-                                      style: poppinStyle(Colors.grey.shade400,
-                                          16, FontWeight.w600),
-                                    ),
-                                    Text(
-                                      "Rs.${cart[index]['price']}",
-                                      style: poppinStyle(
-                                          Colors.black, 16, FontWeight.w600),
-                                    ),
-                                    Text(
-                                      "Qty: ${cart[index]['quantity'].toString()}",
-                                      style: poppinStyle(
-                                          Colors.black, 16, FontWeight.w600),
-                                    ),
-                                  ],
+                                    BorderRadiusDirectional.horizontal(
+                                  end: Radius.circular(10),
                                 ),
-                              ],
+                              ),
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.only(right: 50.0),
+                              child: Icon(AntDesign.delete,
+                                  color: Colors.red.shade900),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              height: commonSize.height * 0.13,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Row(
+                                children: [
+                                  CachedNetworkImage(
+                                      imageUrl: cart[index]['imgUrl']),
+                                  const Gap(10),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        cart[index]['name'],
+                                        style: poppinStyle(
+                                            Colors.black, 18, FontWeight.bold),
+                                      ),
+                                      Text(
+                                        cart[index]['category'],
+                                        style: poppinStyle(Colors.grey.shade400,
+                                            16, FontWeight.w600),
+                                      ),
+                                      Text(
+                                        "Rs.${cart[index]['price']}",
+                                        style: poppinStyle(
+                                            Colors.black, 16, FontWeight.w600),
+                                      ),
+                                      Text(
+                                        "Qty: ${cart[index]['quantity'].toString()}",
+                                        style: poppinStyle(
+                                            Colors.black, 16, FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
-                      }),
+                      },
+                    ),
             );
           }),
         ],

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop/controller/mainScreenController.dart';
 import 'package:shop/visuals/screens/primary_pages/MyHomePage.dart';
 import 'package:shop/visuals/screens/primary_pages/cart_page.dart';
+import 'package:shop/visuals/screens/primary_pages/favPage.dart';
 import 'package:shop/visuals/screens/primary_pages/profile.dart';
 import 'package:shop/visuals/screens/primary_pages/search_page.dart';
 import 'package:shop/visuals/shared/widgets/bottomBarButton.dart';
@@ -19,7 +20,7 @@ class _mainScreenState extends State<mainScreen> {
   List<Widget> pageToDisplay = [
     MyHomePage(),
     SearchPage(),
-    MyHomePage(),
+    FavPage(),
     CartScreen(),
     ProfileScreen()
   ];

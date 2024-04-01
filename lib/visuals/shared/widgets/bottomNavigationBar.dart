@@ -49,8 +49,8 @@ class bottomNavBar extends StatelessWidget {
                     isIconBlack: true,
                     isSelected: SeletedIndex == 2 ? true : false,
                     iconName: SeletedIndex == 2
-                        ? Ionicons.add_circle
-                        : Ionicons.add_circle_outline,
+                        ? Ionicons.heart_circle
+                        : Ionicons.heart_circle_outline,
                     onTap: () {
                       return mainScreenNotifier.pageIndex = 2;
                     }),
