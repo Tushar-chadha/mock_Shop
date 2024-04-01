@@ -16,7 +16,8 @@ class BottomBarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap!(),
+      // ignore: avoid_print
+      onTap: () => onTap!() ?? print("myname i chag"),
       child: SizedBox(
         width: 38,
         height: 38,

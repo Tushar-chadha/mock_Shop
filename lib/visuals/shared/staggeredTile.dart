@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:shop/visuals/shared/utilities/appStyles.dart';
+import 'package:shop/visuals/shared/appStyles.dart';
 
-class LatestShoesTile extends StatefulWidget {
+class StaggeredTitle extends StatefulWidget {
   final shoeName, shoeType, imgUrl, id, price;
   bool isLiked;
 
-  LatestShoesTile({
+  StaggeredTitle({
     super.key,
     required this.shoeName,
     required this.shoeType,
@@ -18,10 +18,10 @@ class LatestShoesTile extends StatefulWidget {
     this.isLiked = false,
   });
   @override
-  State<LatestShoesTile> createState() => _LatestShoesTileState();
+  State<StaggeredTitle> createState() => _StaggeredTitleState();
 }
 
-class _LatestShoesTileState extends State<LatestShoesTile> {
+class _StaggeredTitleState extends State<StaggeredTitle> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,7 +78,7 @@ class _LatestShoesTileState extends State<LatestShoesTile> {
                 ),
                 Text(
                   "Rs." + widget.price.toString(),
-                  style: poppinStyle(Colors.black, 20, FontWeight.w600),
+                  style: poppinStyle(Colors.black, 20, FontWeight.w500),
                 ),
               ],
             )
