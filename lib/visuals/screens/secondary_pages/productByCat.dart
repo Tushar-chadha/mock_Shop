@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/controller/productController.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
-import 'package:shop/visuals/screens/descriptionScreen.dart';
-import 'package:shop/visuals/shared/filterButton.dart';
-import 'package:shop/visuals/shared/latestShoeTile.dart';
-import 'package:shop/visuals/shared/tabBar.dart';
+import 'package:shop/visuals/screens/secondary_pages/descriptionScreen.dart';
+import 'package:shop/visuals/shared/widgets/filterButton.dart';
+import 'package:shop/visuals/shared/widgets/latestShoeTile.dart';
+import 'package:shop/visuals/shared/widgets/tabBar.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
@@ -137,43 +139,50 @@ class _ProductByCatState extends State<ProductByCat>
           return Text(asyncSnapshot.error.toString());
         } else {
           final List<Sneaker> shoeItem = asyncSnapshot.data!;
-          return StaggeredGridView.countBuilder(
-            padding: const EdgeInsets.only(top: 0),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            crossAxisSpacing: 2,
-            mainAxisSpacing: 10,
-            itemCount: shoeItem.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: ((context, index) {
-              final shoeData = shoeItem[index];
-              return GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => DescriptionScreen(
-                      id: shoeData.id,
-                      shoeCategory: shoeData.category,
-                    ),
+          return Consumer<ProductNotifier>(
+              builder: (context, productNotifier, child) {
+            return StaggeredGridView.countBuilder(
+              padding: const EdgeInsets.only(top: 0),
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              crossAxisSpacing: 2,
+              mainAxisSpacing: 10,
+              itemCount: shoeItem.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: ((context, index) {
+                final shoeData = shoeItem[index];
+                return GestureDetector(
+                  onTap: () {
+                    productNotifier.SetShoeSize = shoeData.sizes;
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return DescriptionScreen(
+                          id: shoeData.id,
+                          shoeCategory: shoeData.category,
+                        );
+                      }),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 0, bottom: 2, left: 4, right: 6),
+                    child: LatestShoesTile(
+                        shoeName: shoeData.name,
+                        shoeType: shoeData.category,
+                        imgUrl: shoeData.imageUrl[1],
+                        price: (double.parse(shoeData.price) * 83.22).round(),
+                        id: shoeData.id),
                   ),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.only(
-                      top: 0, bottom: 2, left: 4, right: 6),
-                  child: LatestShoesTile(
-                      shoeName: shoeData.name,
-                      shoeType: shoeData.category,
-                      imgUrl: shoeData.imageUrl[1],
-                      price: (double.parse(shoeData.price) * 83.22).round(),
-                      id: shoeData.id),
-                ),
-              );
-            }),
-            staggeredTileBuilder: (index) => StaggeredTile.extent(
-                (index % 2 == 0) ? 1 : 1,
-                (index % 3 == 1 || index % 6 == 3)
-                    ? MediaQuery.of(context).size.height * 0.36
-                    : MediaQuery.of(context).size.height * 0.31),
-          );
+                );
+              }),
+              staggeredTileBuilder: (index) => StaggeredTile.extent(
+                  (index % 2 == 0) ? 1 : 1,
+                  (index % 3 == 1 || index % 6 == 3)
+                      ? MediaQuery.of(context).size.height * 0.36
+                      : MediaQuery.of(context).size.height * 0.31),
+            );
+          });
         }
       },
     );

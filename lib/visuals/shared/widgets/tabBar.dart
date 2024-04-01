@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop/visuals/shared/appStyles.dart';
+import 'package:shop/visuals/shared/utilities/appStyles.dart';
 
 class tabBarWidget extends StatelessWidget {
   final controller;

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
-import 'package:shop/visuals/shared/appStyles.dart';
+import 'package:shop/visuals/shared/utilities/appStyles.dart';
 
 class ProductCard extends StatefulWidget {
   final shoeName, shoeType, imgUrl, id, price;

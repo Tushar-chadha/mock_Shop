@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:shop/controller/mainScreenController.dart';
-import 'package:shop/visuals/shared/bottomBarButton.dart';
+import 'package:shop/visuals/shared/widgets/bottomBarButton.dart';
 
 class bottomNavBar extends StatelessWidget {
   // ignore: non_constant_identifier_names
