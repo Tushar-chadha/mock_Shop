@@ -22,6 +22,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var commonSize = MediaQuery.of(context).size;
     List<dynamic> cart = [];
+
     final cartData = _cartBox.keys.map((key) {
       final item = _cartBox.get(key);
       return {
@@ -35,7 +36,7 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
         "quantity": item["quantity"]
       };
     }).toList();
-    cart = cartData.reversed.toList();
+    cart = cartData.toList();
 
     return Padding(
       padding: EdgeInsets.fromLTRB(0, commonSize.height * 0.08, 0, 0),
@@ -135,11 +136,15 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                       padding: EdgeInsets.zero,
                       itemCount: cart.length,
                       itemBuilder: (_, index) {
+                        print(cart);
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 12),
+                              vertical: 5, horizontal: 0),
                           child: Dismissible(
                             key: UniqueKey(),
+                            dismissThresholds: const {
+                              DismissDirection.endToStart: 0.5,
+                            },
                             direction: DismissDirection.endToStart,
                             onDismissed: (direction) {
                               setState(() {
@@ -150,10 +155,6 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                             background: Container(
                               decoration: const BoxDecoration(
                                 color: Colors.black,
-                                borderRadius:
-                                    BorderRadiusDirectional.horizontal(
-                                  end: Radius.circular(10),
-                                ),
                               ),
                               alignment: Alignment.centerRight,
                               padding: const EdgeInsets.only(right: 50.0),
@@ -165,9 +166,8 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                                   vertical: 10, horizontal: 10),
                               height: commonSize.height * 0.13,
                               decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
+                                color: Colors.white,
+                              ),
                               child: Row(
                                 children: [
                                   CachedNetworkImage(
@@ -182,23 +182,34 @@ class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
                                       Text(
                                         cart[index]['name'],
                                         style: poppinStyle(
-                                            Colors.black, 18, FontWeight.bold),
+                                            Colors.black, 20, FontWeight.bold),
                                       ),
                                       Text(
                                         cart[index]['category'],
                                         style: poppinStyle(Colors.grey.shade400,
                                             16, FontWeight.w600),
                                       ),
-                                      Text(
-                                        "Rs.${cart[index]['price']}",
-                                        style: poppinStyle(
-                                            Colors.black, 16, FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "Qty: ${cart[index]['quantity'].toString()}",
-                                        style: poppinStyle(
-                                            Colors.black, 16, FontWeight.w600),
-                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Rs.${cart[index]['price']}",
+                                            style: poppinStyle(Colors.black, 18,
+                                                FontWeight.w600),
+                                          ),
+                                          const Gap(10),
+                                          Text(
+                                            "Qty: ${cart[index]['quantity'].toString()}",
+                                            style: poppinStyle(Colors.black, 18,
+                                                FontWeight.w600),
+                                          ),
+                                          const Gap(10),
+                                          Text(
+                                            "Size: ${cart[index]['size']}",
+                                            style: poppinStyle(Colors.black, 18,
+                                                FontWeight.w600),
+                                          ),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ],
