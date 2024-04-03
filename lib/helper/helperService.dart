@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:shop/model/sneakerModel.dart';
 
 class helper {
@@ -54,5 +55,12 @@ class helper {
     final shoe = ShoeList.firstWhere((sneaker) => sneaker.id == id);
 
     return shoe;
+  }
+
+  final _favBox = Hive.box("fav_box");
+
+  Future<void> createFavBox(Map<String, dynamic> newFav) async {
+    await _favBox.add(newFav); //cart shared preferences
+    print(_favBox.values);
   }
 }
