@@ -7,7 +7,6 @@ import 'package:shop/visuals/shared/utilities/appStyles.dart';
 
 class ProductCard extends StatefulWidget {
   final shoeName, shoeType, imgUrl, id, price;
-  bool isLiked;
 
   ProductCard({
     super.key,
@@ -16,7 +15,6 @@ class ProductCard extends StatefulWidget {
     required this.imgUrl,
     required this.price,
     required this.id,
-    this.isLiked = false,
   });
 
   @override
@@ -45,71 +43,52 @@ class _ProductCardState extends State<ProductCard> {
         ),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         width: MediaQuery.of(context).size.width * 0.6,
-        child: Stack(children: [
-          Positioned(
-            top: 8,
-            right: 8,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  widget.isLiked = widget.isLiked ? false : true;
-                });
-              },
-              child: Icon(
-                widget.isLiked
-                    ? CupertinoIcons.heart_fill
-                    : CupertinoIcons.heart,
-                size: widget.isLiked ? 22 : 20,
-              ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              height: MediaQuery.of(context).size.height * 0.20,
+              child: CachedNetworkImage(
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.cover,
+                  useOldImageOnUrlChange: true,
+                  imageUrl: widget.imgUrl.toString()),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                height: MediaQuery.of(context).size.height * 0.20,
-                child: CachedNetworkImage(
-                    filterQuality: FilterQuality.high,
-                    fit: BoxFit.cover,
-                    useOldImageOnUrlChange: true,
-                    imageUrl: widget.imgUrl.toString()),
-              ),
-              Text(
-                widget.shoeName,
-                style: poppinStyle(Colors.black, 25, FontWeight.bold),
-              ),
-              Text(
-                widget.shoeType,
-                style: poppinStyle(Colors.black45, 15, FontWeight.normal),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Rs." + widget.price.toString(),
-                    style: poppinStyle(Colors.black, 20, FontWeight.w500),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Colors",
-                        style:
-                            poppinStyle(Colors.black45, 15, FontWeight.normal),
-                      ),
-                      const Gap(5),
-                      const CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Colors.black,
-                      )
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-        ]),
+            Text(
+              widget.shoeName,
+              style: poppinStyle(Colors.black, 25, FontWeight.bold),
+            ),
+            Text(
+              widget.shoeType,
+              style: poppinStyle(Colors.black45, 15, FontWeight.normal),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Rs." + widget.price.toString(),
+                  style: poppinStyle(Colors.black, 20, FontWeight.w500),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Colors",
+                      style:
+                          poppinStyle(Colors.black45, 15, FontWeight.normal),
+                    ),
+                    const Gap(5),
+                    const CircleAvatar(
+                      radius: 12,
+                      backgroundColor: Colors.black,
+                    )
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

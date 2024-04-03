@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -10,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:shop/controller/cartProvider.dart';
 import 'package:shop/controller/favController.dart';
 import 'package:shop/controller/productController.dart';
-import 'package:shop/helper/constants.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
 import 'package:shop/visuals/shared/utilities/appStyles.dart';
@@ -50,7 +47,6 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
     _favNotifier = Provider.of<FavNotifier>(context, listen: false);
     _favNotifier.getFav(); // Call getFav() when DescriptionScreen initializes
   }
-  
 
   void getShoes() {
     if (widget.shoeCategory == "Men's Running") {
