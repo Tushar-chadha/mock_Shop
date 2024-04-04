@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:gap/gap.dart';
@@ -7,9 +8,12 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/controller/cartProvider.dart';
 import 'package:shop/controller/favController.dart';
+import 'package:shop/controller/mainScreenController.dart';
 import 'package:shop/controller/productController.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
+import 'package:shop/visuals/screens/mainScreen.dart';
+import 'package:shop/visuals/screens/primary_pages/cart_page.dart';
 import 'package:shop/visuals/shared/utilities/appStyles.dart';
 import 'package:shop/visuals/shared/widgets/action_chip_for_sizes.dart';
 import 'package:shop/visuals/shared/widgets/checkout_button.dart';
@@ -63,9 +67,10 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
   Widget build(BuildContext context) {
     toastContext.init(context);
     var commonHeight = MediaQuery.of(context).size.height;
-    return Consumer3<ProductNotifier, CartNotifier, FavNotifier>(builder:
-        (BuildContext context, productNotifier, cartNotifier, favNotifier,
-            Widget? child) {
+    return Consumer4<ProductNotifier, CartNotifier, FavNotifier,
+            MainScreenNotifier>(
+        builder: (BuildContext context, productNotifier, cartNotifier,
+            favNotifier, mainScreenNotifier, Widget? child) {
       return PopScope(
         canPop: true,
         onPopInvoked: (didPop) {
@@ -130,7 +135,17 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                   size: 30,
                                 ),
                               ),
-                              Icon(MaterialCommunityIcons.cart, size: 30),
+                              GestureDetector(
+                                  onTap: () {
+                                    mainScreenNotifier.pageIndex = 3;
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => mainScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: Icon(MaterialCommunityIcons.cart,
+                                      size: 30)),
                             ],
                           ),
                         ),

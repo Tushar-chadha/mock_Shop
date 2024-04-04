@@ -130,9 +130,9 @@ class _FavPageState extends State<FavPage> {
                                                 fav[index]["id"]);
                                           });
                                         },
-                                        child: Icon(
+                                        child: const Icon(
                                           MaterialCommunityIcons.heart,
-                                          color: Colors.red.shade800,
+                                          color: Colors.red,
                                           size: 30,
                                         ),
                                       ),

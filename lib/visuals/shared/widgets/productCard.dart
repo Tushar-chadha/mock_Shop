@@ -75,8 +75,7 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Text(
                       "Colors",
-                      style:
-                          poppinStyle(Colors.black45, 15, FontWeight.normal),
+                      style: poppinStyle(Colors.black45, 15, FontWeight.normal),
                     ),
                     const Gap(5),
                     const CircleAvatar(
