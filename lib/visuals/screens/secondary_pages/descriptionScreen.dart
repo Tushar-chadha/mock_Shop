@@ -130,8 +130,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                   size: 30,
                                 ),
                               ),
-                              const Icon(Entypo.dots_three_horizontal,
-                                  size: 30),
+                              Icon(MaterialCommunityIcons.cart, size: 30),
                             ],
                           ),
                         ),
@@ -173,11 +172,15 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                                     }
                                   },
                                   child: Icon(
-                                      favNotifier.id.contains(sneakerData.id)
-                                          ? MaterialCommunityIcons.heart
-                                          : MaterialCommunityIcons
-                                              .heart_outline,
-                                      size: 30)),
+                                    favNotifier.id.contains(sneakerData.id)
+                                        ? MaterialCommunityIcons.heart
+                                        : MaterialCommunityIcons.heart_outline,
+                                    size: 30,
+                                    color:
+                                        favNotifier.id.contains(sneakerData.id)
+                                            ? Colors.red
+                                            : Colors.black,
+                                  )),
                             ],
                           ),
                         ),

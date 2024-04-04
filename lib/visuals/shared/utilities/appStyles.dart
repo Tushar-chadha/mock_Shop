@@ -14,3 +14,5 @@ TextStyle poppinStyleHeight(
       fontSize: fontSize,
       fontWeight: fontWeight);
 }
+
+Color commonBackground = const Color(0xFFE2E2E2);
