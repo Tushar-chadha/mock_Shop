@@ -16,7 +16,7 @@ class bottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(10),
       child: Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -38,38 +38,26 @@ class bottomNavBar extends StatelessWidget {
               BottomBarButton(
                   isSelected: SeletedIndex == 1 ? true : false,
                   iconName: SeletedIndex == 1
-                      ? Ionicons.search
-                      : Ionicons.search_outline,
+                      ? Ionicons.md_heart
+                      : Ionicons.md_heart_outline,
                   onTap: () {
                     return mainScreenNotifier.pageIndex = 1;
                   }),
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                child: BottomBarButton(
-                    isIconBlack: true,
-                    isSelected: SeletedIndex == 2 ? true : false,
-                    iconName: SeletedIndex == 2
-                        ? Ionicons.heart_circle
-                        : Ionicons.heart_circle_outline,
-                    onTap: () {
-                      return mainScreenNotifier.pageIndex = 2;
-                    }),
-              ),
               BottomBarButton(
-                isSelected: SeletedIndex == 3 ? true : false,
+                isSelected: SeletedIndex == 2 ? true : false,
                 iconName:
-                    SeletedIndex == 3 ? Ionicons.cart : Ionicons.cart_outline,
+                    SeletedIndex == 2 ? Ionicons.cart : Ionicons.cart_outline,
                 onTap: () {
-                  return mainScreenNotifier.pageIndex = 3;
+                  return mainScreenNotifier.pageIndex = 2;
                 },
               ),
               BottomBarButton(
-                isSelected: SeletedIndex == 4 ? true : false,
-                iconName: SeletedIndex == 4
+                isSelected: SeletedIndex == 3 ? true : false,
+                iconName: SeletedIndex == 3
                     ? Ionicons.person
                     : Ionicons.person_outline,
                 onTap: () {
-                  return mainScreenNotifier.pageIndex = 4;
+                  return mainScreenNotifier.pageIndex = 3;
                 },
               ),
             ],

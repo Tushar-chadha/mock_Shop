@@ -19,7 +19,6 @@ class mainScreen extends StatefulWidget {
 class _mainScreenState extends State<mainScreen> {
   List<Widget> pageToDisplay = [
     MyHomePage(),
-    SearchPage(),
     FavPage(),
     CartScreen(),
     ProfileScreen()

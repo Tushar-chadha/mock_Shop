@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:gap/gap.dart';
@@ -13,7 +14,6 @@ import 'package:shop/controller/productController.dart';
 import 'package:shop/helper/helperService.dart';
 import 'package:shop/model/sneakerModel.dart';
 import 'package:shop/visuals/screens/mainScreen.dart';
-import 'package:shop/visuals/screens/primary_pages/cart_page.dart';
 import 'package:shop/visuals/shared/utilities/appStyles.dart';
 import 'package:shop/visuals/shared/widgets/action_chip_for_sizes.dart';
 import 'package:shop/visuals/shared/widgets/checkout_button.dart';
@@ -40,7 +40,6 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
 
   Future<void> _createCart(Map<String, dynamic> newCart) async {
     await _cartBox.add(newCart); //cart shared preferences
-    print(_cartBox.values);
   }
 
   late FavNotifier _favNotifier;
@@ -137,7 +136,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               ),
                               GestureDetector(
                                   onTap: () {
-                                    mainScreenNotifier.pageIndex = 3;
+                                    mainScreenNotifier.pageIndex = 2;
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) => mainScreen(),

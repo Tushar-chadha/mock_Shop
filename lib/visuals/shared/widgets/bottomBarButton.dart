@@ -22,7 +22,7 @@ class BottomBarButton extends StatelessWidget {
         height: 38,
         child: Icon(
           iconName,
-          size: isSelected ? 28 : 22,
+          size: isSelected ? 30 : 26,
           color: isIconBlack == true ? Colors.black : Colors.white,
         ),
       ),

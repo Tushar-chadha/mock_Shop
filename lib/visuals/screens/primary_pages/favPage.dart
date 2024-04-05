@@ -36,7 +36,7 @@ class _FavPageState extends State<FavPage> {
         children: [
           Container(
             padding: EdgeInsets.fromLTRB(
-                commonSize.height * 0.025, commonSize.height * 0.07, 0, 0),
+                commonSize.height * 0.015, commonSize.height * 0.07, 0, 0),
             width: double.maxFinite,
             height: MediaQuery.of(context).size.height * 0.4,
             decoration: const BoxDecoration(
@@ -49,7 +49,7 @@ class _FavPageState extends State<FavPage> {
             child: Text(
               textAlign: TextAlign.start,
               "WishList",
-              style: poppinStyle(Colors.white, 55, FontWeight.bold),
+              style: poppinStyle(Colors.white, 50, FontWeight.w600),
             ),
           ),
           fav.isEmpty
@@ -60,11 +60,11 @@ class _FavPageState extends State<FavPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Gap(50),
+                      Gap(140),
                       Text(
                         "Loved It?",
                         textAlign: TextAlign.center,
-                        style: poppinStyle(Colors.black, 40, FontWeight.bold),
+                        style: poppinStyle(Colors.black, 30, FontWeight.bold),
                       ),
                       const Gap(5),
                       ElevatedButton(
@@ -84,7 +84,7 @@ class _FavPageState extends State<FavPage> {
                         },
                         child: Text(
                           "Add it to Wishlist",
-                          style: poppinStyle(Colors.white, 22, FontWeight.w500),
+                          style: poppinStyle(Colors.white, 20, FontWeight.w500),
                         ),
                       ),
                     ],
